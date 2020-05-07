@@ -1,3 +1,4 @@
+#! /bin/bash
 echo "export XAUTHORITY=~/.Xauthority" >> ~/.bashrc
 echo "alias ll='ls -lha --color=auto'" >> ~/.bashrc
 echo "alias cls=clear" >> ~/.bashrc
