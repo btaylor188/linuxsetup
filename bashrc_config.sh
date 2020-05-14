@@ -2,5 +2,5 @@
 echo 'export XAUTHORITY=~/.Xauthority' >> ~/.bashrc
 echo "alias ll='ls -lha --color=auto'" >> ~/.bashrc
 echo 'alias cls=clear' >> ~/.bashrc
-echo 'export PS1="\[\033[38;5;10m\]\u\[$(tput sgr0)\]@\[$(tput sgr0)\]\[\033[38;5;196m\]\h\[$(tput sgr0)\]:\[$(tput sgr0)\]\[\033[38;5;14m\]\w\[$(tput sgr0)\]\\$\[$(tput sgr0)\]"' >> ~/.bashrc
+echo 'export PS1="\[\e[32m\]\u\[\e[m\]@\[\e[31m\]\h\[\e[m\]:\[\e[33m\]\t\[\e[m\]:\[\e[36m\]\w\[\e[m\] "' >> ~/.bashrc
 bash
