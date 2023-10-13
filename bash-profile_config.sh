@@ -4,7 +4,6 @@ echo "alias ll='ls -lha --color=auto'" >> ~/.bashrc
 echo 'alias cls=clear' >> ~/.bashrc
 echo "alias du1='du -h -d 1'" >> ~/.bashrc
 echo "alias untar='tar -xvf'" >> ~/.bashrc
-echo "alias please='sudo "$BASH" -c "$(history -p !!)"'" >> ~/.bashrc
 echo 'export PS1="\[\e[32m\]\u\[\e[m\]@\[\e[31m\]\h\[\e[m\]:\[\e[33m\]\A\[\e[m\]:\[\e[36m\]\w\[\e[m\]\[\e[36m\]\\$\[\e[m\] "' >> ~/.bashrc
 echo 'git config --global credential.helper "cache --timeout=86400"' >> ~/.profile
 bash
