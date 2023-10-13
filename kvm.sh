@@ -22,7 +22,9 @@ export DNS=$DNS
 export SUFFIX=$SUFFIX
 
 #Install Software
+##RHEL
 dnf -y install qemu-kvm libvirt virt-install cockpit cockpit-machines
+##Debian
 apt-update
 apt -y install qemu-kvm libvirt virt-install cockpit cockpit-machines
 systemctl enable --now libvirtd
