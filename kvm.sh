@@ -26,6 +26,7 @@ dnf -y install qemu-kvm libvirt virt-install cockpit cockpit-machines
 apt-update
 apt -y install qemu-kvm libvirt virt-install cockpit cockpit-machines
 systemctl enable --now libvirtd
+systemctl enable --now cockpit.socket
 
 #Configure Bridge
 nmcli connection add type bridge autoconnect yes con-name br0 ifname br0
@@ -54,3 +55,4 @@ EOF1
 sysctl -p /etc/sysctl.d/99-netfilter-bridge.conf
 
 echo "Please Reboot"
+echo "Cockpit can be accessed on port 9090"
