@@ -23,6 +23,8 @@ export SUFFIX=$SUFFIX
 
 #Install Software
 dnf -y install qemu-kvm libvirt virt-install cockpit cockpit-machines
+apt-update
+apt -y install qemu-kvm libvirt virt-install cockpit cockpit-machines
 systemctl enable --now libvirtd
 
 #Configure Bridge
@@ -50,3 +52,5 @@ br_netfilter
 EOF1
 
 sysctl -p /etc/sysctl.d/99-netfilter-bridge.conf
+
+echo "Please Reboot"
