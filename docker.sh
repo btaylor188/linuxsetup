@@ -30,3 +30,4 @@ add-apt-repository \
 apt update > docker.log 2>&1
 apt install docker-ce docker-ce-cli docker-compose containerd.io -y > docker.log 2>&1
 sudo systemctl enable docker --now > docker.log 2>&1
+docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
