@@ -2,9 +2,9 @@
 echo "Installing Docker"
 
 #### RedHat ####
-sudo yum check-update > docker.log 2>&1
-curl -fsSL https://get.docker.com/ | sh > docker.log 2>&1
-sudo yum install docker-compose
+sudo yum install -y yum-utils
+sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+sudo yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 
 
