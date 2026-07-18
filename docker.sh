@@ -17,6 +17,16 @@ if ! command -v docker &>/dev/null; then
     fi
 fi
 
+# On RHEL-family systems (e.g. AlmaLinux), the nftables 'nat' table is often
+# left uninitialized on minimal cloud images. firewalld is what normally
+# creates it, and without it dockerd fails on first start with:
+#   "RULE_APPEND failed (No such file or directory): rule in chain PREROUTING"
+if command -v dnf &>/dev/null && ! systemctl is-active --quiet firewalld; then
+    echo "Ensuring firewalld is installed and running (needed for Docker's iptables rules on RHEL-family systems)..."
+    sudo dnf install -y firewalld >> docker.log 2>&1
+    sudo systemctl enable --now firewalld
+fi
+
 sudo systemctl enable docker --now
 
 read -rp "Install Portainer? [y/N] " install_portainer
