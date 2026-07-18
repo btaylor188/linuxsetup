@@ -72,21 +72,6 @@ if command -v dnf &>/dev/null && ! systemctl is-active --quiet firewalld; then
     sudo systemctl enable --now firewalld
 fi
 
-# On RHEL-family systems, dockerd's bridge network needs the xt_addrtype
-# kernel module (from kernel-modules-extra). If a kernel update is installed
-# but not yet booted into, that package can be present only for the newer
-# kernel while the box is still running the old one, so the module is
-# missing and dockerd fails with "Extension addrtype ... missing kernel
-# module?". Warn so a reboot isn't a mystery debugging session.
-if command -v dnf &>/dev/null; then
-    latest_kernel=$(rpm -q kernel --last 2>/dev/null | head -1 | awk '{print $1}')
-    latest_kernel=${latest_kernel#kernel-}
-    if [[ -n "$latest_kernel" && "$latest_kernel" != "$(uname -r)" ]]; then
-        echo "NOTE: kernel $latest_kernel is installed but not running (currently: $(uname -r))."
-        echo "If Docker fails to start with an iptables/addrtype error below, reboot and re-run this script."
-    fi
-fi
-
 sudo systemctl enable docker --now
 
 docker --version
