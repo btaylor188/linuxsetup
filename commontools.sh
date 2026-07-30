@@ -1,8 +1,11 @@
-#! /bin/bash
+#!/bin/bash
 echo "############   Installing Updates and Common Tools###############"
 echo "############       This will take some time...    ###############"
 
-if command -v dnf &>/dev/null; then
+source "$(dirname "$0")/lib.sh"
+detect_pkg_mgr
+
+if [[ "$PKG_MGR" == dnf ]]; then
     sudo dnf --enablerepo=extras install epel-release -y > commontools.log 2>&1
     sudo dnf update -y
     sudo dnf install htop screen iftop wget zip unzip ntfs-3g nano mc net-tools curl nfs-utils tar links bind-utils iputils traceroute whois nmap openssl -y
@@ -18,12 +21,10 @@ if command -v dnf &>/dev/null; then
         echo "NOTE: kernel $latest_kernel is installed but not running (currently: $(uname -r))."
         echo "A reboot is recommended before relying on new kernel modules (e.g. before running docker.sh)."
     fi
-elif command -v apt &>/dev/null; then
+else
     sudo apt update -y
     sudo apt install htop screen iftop wget zip unzip ntfs-3g nano mc net-tools curl nfs-common tar links bsdmainutils dnsutils iputils-ping traceroute whois nmap openssl -y
     sudo apt upgrade -y
-else
-    echo "Unsupported package manager. Skipping package installation."
 fi
 
 git config --global credential.helper "cache --timeout=86400"

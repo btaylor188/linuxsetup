@@ -1,5 +1,7 @@
-#! /bin/bash
+#!/bin/bash
 echo "Installing Docker"
+
+source "$(dirname "$0")/lib.sh"
 
 if [[ ! -f /etc/os-release ]]; then
     echo "Cannot detect OS: /etc/os-release not found."
@@ -48,13 +50,11 @@ install_docker_dnf() {
     sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin >> docker.log 2>&1
 }
 
-if command -v apt-get &>/dev/null; then
+detect_pkg_mgr
+if [[ "$PKG_MGR" == apt ]]; then
     install_docker_apt
-elif command -v dnf &>/dev/null; then
-    install_docker_dnf
 else
-    echo "Unsupported package manager: this script supports apt and dnf based distros only."
-    exit 1
+    install_docker_dnf
 fi
 
 if ! command -v docker &>/dev/null; then
@@ -66,7 +66,7 @@ fi
 # left uninitialized on minimal cloud images. firewalld is what normally
 # creates it, and without it dockerd fails on first start with:
 #   "RULE_APPEND failed (No such file or directory): rule in chain PREROUTING"
-if command -v dnf &>/dev/null && ! systemctl is-active --quiet firewalld; then
+if [[ "$PKG_MGR" == dnf ]] && ! systemctl is-active --quiet firewalld; then
     echo "Ensuring firewalld is installed and running (needed for Docker's iptables rules on RHEL-family systems)..."
     sudo dnf install -y firewalld >> docker.log 2>&1
     sudo systemctl enable --now firewalld
